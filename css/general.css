@@ -67,3 +67,11 @@ button:disabled {
     }
   }
 }
+
+.version {
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
