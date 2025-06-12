@@ -1,0 +1,68 @@
+class Cube {
+  mesh = null; // babylon object
+  size = {
+    width: null,
+    height: null,
+    depth: null,
+  };
+  position = {
+    x: null,
+    y: null,
+  };
+  materials = {
+    top: null,
+    bottom: null,
+    front: null,
+    back: null,
+    left: null,
+    right: null,
+  };
+  neighborCubes = {
+    top: null,
+    bottom: null,
+    front: null,
+    back: null,
+    left: null,
+    right: null,
+  };
+
+  static applyTextureWithFixedPixelSize(mesh, textureURL, pixelSize) {
+    const scene = mesh.getScene();
+
+    // Загружаем текстуру
+    const texture = new BABYLON.Texture(textureURL, scene);
+
+    // Получаем размеры меша в мировых единицах по X и Z
+    const bounds = mesh.getBoundingInfo().boundingBox.extendSize;
+    const sizeX = bounds.x * 2;
+    const sizeZ = bounds.z * 2;
+
+    // Как получить размеры текстуры в пикселях?
+    // Babylon.js не даёт напрямую, но можно получить через texture.getSize()
+    texture.onLoadObservable.add(() => {
+      const texSize = texture.getSize();
+      if (!texSize) {
+        console.warn("Не удалось получить размер текстуры.");
+        return;
+      }
+      const texWidthPx = texSize.width;
+      const texHeightPx = texSize.height;
+
+      // Считаем, сколько плиток должно быть по ширине и высоте
+      const tilesX = sizeX / (pixelSize / texWidthPx);
+      const tilesZ = sizeZ / (pixelSize / texHeightPx);
+
+      texture.uScale = tilesX;
+      texture.vScale = tilesZ;
+    });
+
+    // Создаём материал и применяем
+    const mat = new BABYLON.StandardMaterial("mat", scene);
+    mat.diffuseTexture = texture;
+    mesh.material = mat;
+  }
+
+  constructor() { }
+}
+
+export default Cube;
