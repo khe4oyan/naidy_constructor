@@ -1,5 +1,8 @@
 class Cube {
+  static cubeIndex = 0;
+
   mesh = null; // babylon object
+  cubeName = null;
   size = {
     width: null,
     height: null,
@@ -62,7 +65,17 @@ class Cube {
     mesh.material = mat;
   }
 
-  constructor() { }
+  constructor(x, y, z, neighborSide, neighborCubeRef) {
+    this.cubeName = `cube_${Cube.cubeIndex++}`;
+    const box = BABYLON.MeshBuilder.CreateBox(this.cubeName, { size: 1 }, this.scene);
+    box.position.x = x;
+    box.position.y = y;
+    box.position.z = z;
+
+    Cube.applyTextureWithFixedPixelSize(box, "../assets/textures/greenprint.png", 10000);
+
+    this.mesh = box;
+  }
 }
 
 export default Cube;
