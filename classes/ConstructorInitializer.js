@@ -39,21 +39,9 @@ class ConstructorInitializer {
   }
 
   #run() {
-    // this.#runObjectOnClickHandler();
     this.#runRender();
     this.#runOnResizeHandler();
   }
-
-  // #runObjectOnClickHandler() {
-  //   this.scene.onPointerObservable.add((pointerInfo) => {
-  //     if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERPICK) {
-  //       const pickedMesh = pointerInfo.pickInfo.pickedMesh;
-  //       if (pickedMesh?.name === "box") {
-  //         // Здесь можно добавить любое действие при клике по кубу
-  //       }
-  //     }
-  //   });
-  // }
 
   #runRender() {
     // Запускаем рендер

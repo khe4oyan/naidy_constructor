@@ -1,6 +1,7 @@
 class Cube {
   static cubeIndex = 0;
 
+  constructorRef = null;
   mesh = null; // babylon object
   cubeName = null;
   size = {
@@ -65,7 +66,8 @@ class Cube {
     mesh.material = mat;
   }
 
-  constructor(x, y, z, neighborSide, neighborCubeRef) {
+  constructor(x, y, z, neighborSide, neighborCubeRef, constructorRef) {
+    this.constructorRef = constructorRef;
     this.cubeName = `cube_${Cube.cubeIndex++}`;
     const box = BABYLON.MeshBuilder.CreateBox(this.cubeName, { size: 1 }, this.scene);
     box.position.x = x;
