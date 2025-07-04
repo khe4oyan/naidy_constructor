@@ -21,6 +21,10 @@ moveButtonDOM.addEventListener("click", () => {
 
 const scaleButtonDOM = document.querySelector('.controll_scale');
 scaleButtonDOM.addEventListener("click", () => {
-  constructor.toggleScaleGizmo();
-  scaleButtonDOM.classList.toggle("activeTool");
+  if (constructor.selectedCube) {
+    // show modal
+    // set new sizes
+  } else {
+    alert("Select any cube before change it scale");
+  }
 });
