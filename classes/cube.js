@@ -9,11 +9,7 @@ class Cube {
     height: null,
     depth: null,
   };
-  position = {
-    x: null,
-    y: null,
-  };
-
+  
   static applyTextureWithFixedPixelSize(mesh, textureURL, pixelSize) {
     const scene = mesh.getScene();
 
