@@ -56,14 +56,10 @@ button:disabled {
     &:disabled {
       opacity: 1;
       background-color: rgb(94, 110, 126);
-
-      img {
-        opacity: .2;
-      }
     }
 
-    img {
-      width: 100%;
+    &.activeTool {
+      border-color: yellow;
     }
   }
 }
