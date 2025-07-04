@@ -1,8 +1,9 @@
-import ConstructorInitializer from "./ConstructorInitializer.js";
+import ConstructorInitializer from "./constructorInitializer.js";
 import Cube from "./Cube.js";
 
 class Constructor {
   static STATES = {
+    neitral: "STATES_neitral",
     select: "STATES_select",
     addCube: "STATES_addCube",
   };
@@ -11,15 +12,17 @@ class Constructor {
   engine = null;
   scene = null;
   state = null;
-  cubes = null;
+  camera = null;
+  light = null;
 
   constructor(groundW, groundH) {
-    const [canvasDOM, engine, scene] = new ConstructorInitializer(groundW, groundH);
+    const [canvasDOM, engine, scene, camera, light] = new ConstructorInitializer(groundW, groundH);
     this.canvasDOM = canvasDOM;
     this.engine = engine;
     this.scene = scene;
-    this.state = Constructor.STATES.select;
-    this.cubes = new Map();
+    this.state = Constructor.STATES.neitral;
+    this.camera = camera;
+    this.light = light;
     this.#cubeClickInit();
   }
 
@@ -27,16 +30,14 @@ class Constructor {
     this.scene.onPointerObservable.add((pointerInfo) => {
       if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERPICK) {
         const pickInfo = pointerInfo.pickInfo;
-
+        console.log(pickInfo);
         // state - select
-        // state - 
       }
     });
   }
 
-  newCube(x, y, z, neighborSide = null, neighborCubeRef = null) {
-    const cube = new Cube(x, y, z, neighborSide, neighborCubeRef, this);
-    this.cubes.set(cube.cubeName, cube);
+  newCube(x, y, z, neighborSide = null) {
+    const cube = new Cube(x, y, z, neighborSide, this);
     return cube.cubeName;
   }
 };

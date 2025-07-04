@@ -13,22 +13,6 @@ class Cube {
     x: null,
     y: null,
   };
-  materials = {
-    top: null,
-    bottom: null,
-    front: null,
-    back: null,
-    left: null,
-    right: null,
-  };
-  neighborCubes = {
-    top: null,
-    bottom: null,
-    front: null,
-    back: null,
-    left: null,
-    right: null,
-  };
 
   static applyTextureWithFixedPixelSize(mesh, textureURL, pixelSize) {
     const scene = mesh.getScene();
@@ -66,7 +50,7 @@ class Cube {
     mesh.material = mat;
   }
 
-  constructor(x, y, z, neighborSide, neighborCubeRef, constructorRef) {
+  constructor(x, y, z, constructorRef) {
     this.constructorRef = constructorRef;
     this.cubeName = `cube_${Cube.cubeIndex++}`;
     const box = BABYLON.MeshBuilder.CreateBox(this.cubeName, { size: 1 }, this.scene);

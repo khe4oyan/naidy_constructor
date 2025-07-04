@@ -4,6 +4,8 @@ class ConstructorInitializer {
   canvasDOM = null;
   engine = null;
   scene = null;
+  camera = null;
+  light = null;
 
   constructor(groundW, groundH) {
     this.#initCanvas();
@@ -11,7 +13,7 @@ class ConstructorInitializer {
     this.#initScene(groundW, groundH);
     this.#run();
 
-    return [this.canvasDOM, this.engine, this.scene];
+    return [this.canvasDOM, this.engine, this.scene, this.camera, this.light];
   }
 
   #initCanvas() {
@@ -26,15 +28,16 @@ class ConstructorInitializer {
     this.scene = new BABYLON.Scene(this.engine);
 
     // Камера
-    const camera = new BABYLON.ArcRotateCamera("camera1", Math.PI / 3, Math.PI / 3, 20, BABYLON.Vector3.Zero(), this.scene);
-    camera.attachControl(this.canvasDOM, true);
+    this.camera = new BABYLON.ArcRotateCamera("camera1", Math.PI / 3, Math.PI / 3, 20, BABYLON.Vector3.Zero(), this.scene);
+    this.camera.attachControl(this.canvasDOM, true);
 
     // Свет
-    const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), this.scene);
-    light.intensity = 0.9;
+    this.light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), this.scene);
+    this.light.intensity = 0.9;
 
     // Плоскость (земля)
     const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: groundW, height: groundH }, this.scene);
+    ground.position.y = -0.5
     Cube.applyTextureWithFixedPixelSize(ground, "../assets/textures/blueprint.png", 10000);
   }
 
