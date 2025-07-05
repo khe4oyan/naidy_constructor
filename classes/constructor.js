@@ -2,43 +2,67 @@ import ConstructorInitializer from "./constructorInitializer.js";
 import Cube from "./Cube.js";
 
 class Constructor {
-  static STATES = {
-    neitral: "STATES_neitral",
-    select: "STATES_select",
-    addCube: "STATES_addCube",
-  };
-
   canvasDOM = null;
   engine = null;
-  scene = null;
   state = null;
   camera = null;
   light = null;
+  cubes = null;
+  selectedCube = null;
+  gizmoManager = null;
 
   constructor(groundW, groundH) {
     const [canvasDOM, engine, scene, camera, light] = new ConstructorInitializer(groundW, groundH);
     this.canvasDOM = canvasDOM;
     this.engine = engine;
     this.scene = scene;
-    this.state = Constructor.STATES.neitral;
     this.camera = camera;
     this.light = light;
+    this.cubes = [];
+
+    this.gizmoManager = new BABYLON.GizmoManager(scene);
     this.#cubeClickInit();
   }
 
   #cubeClickInit() {
     this.scene.onPointerObservable.add((pointerInfo) => {
-      if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERPICK) {
-        const pickInfo = pointerInfo.pickInfo;
-        console.log(pickInfo);
-        // state - select
+      if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERTAP) {
+        const meshData = pointerInfo?._pickInfo?.pickedMesh;
+        console.log(meshData);
+        
+        this.gizmoManager.positionGizmoEnabled = false;
+        // const pickInfo = pointerInfo.pickInfo;
+
+        if (meshData?.name !== "ground") {
+          this.selectedCube = meshData;
+          this.gizmoManager.attachToMesh(this.selectedCube);
+          this.gizmoManager.positionGizmoEnabled = true;
+        } else {
+          this.selectedCube = null;
+        }
       }
     });
   }
 
   newCube(x, y, z, neighborSide = null) {
     const cube = new Cube(x, y, z, neighborSide, this);
+    this.cubes.push(cube);
+
+    this.gizmoManager.attachableMeshes = this.cubes;
+
     return cube.cubeName;
+  }
+
+  stateUpdate(newState) {
+    this.state = newState;
+  }
+
+  toggleMoveGizmo() {
+    this.gizmoManager.positionGizmoEnabled = !this.gizmoManager.positionGizmoEnabled;
+  }
+
+  resizeSelectedMesh(width, height, depth) {
+    this.selectedCube.scaling = new BABYLON.Vector3(width, height, depth);
   }
 };
 
