@@ -1,4 +1,4 @@
-class Modal {
+class ModalMeshScale {
   constructorRef = null;
 
   modalDOM = null;
@@ -79,4 +79,4 @@ class Modal {
   }
 }
 
-export default Modal;
+export default ModalMeshScale;
