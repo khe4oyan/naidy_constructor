@@ -8,7 +8,7 @@ class Constructor {
   camera = null;
   light = null;
   cubes = null;
-  selectedCube = null;
+  selectedMesh = null;
   gizmoManager = null;
 
   constructor(groundW, groundH) {
@@ -28,20 +28,26 @@ class Constructor {
     this.scene.onPointerObservable.add((pointerInfo) => {
       if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERTAP) {
         const meshData = pointerInfo?._pickInfo?.pickedMesh;
-        console.log(meshData);
-        
+
         this.gizmoManager.positionGizmoEnabled = false;
-        // const pickInfo = pointerInfo.pickInfo;
 
         if (meshData?.name !== "ground") {
-          this.selectedCube = meshData;
-          this.gizmoManager.attachToMesh(this.selectedCube);
+          this.newSelectedMesh(meshData);
+          this.gizmoManager.attachToMesh(this.selectedMesh);
           this.gizmoManager.positionGizmoEnabled = true;
         } else {
-          this.selectedCube = null;
+          this.newSelectedMesh(null);
         }
       }
     });
+  }
+
+  newSelectedMesh(mesh) {
+    this.selectedMesh = mesh;
+    if (this.selectedMesh) {
+      const {_x, _y, _z} = this.selectedMesh.position;
+      this.camera.setTarget(new BABYLON.Vector3(_x, _y, _z));
+    }
   }
 
   newCube(x, y, z, neighborSide = null) {
@@ -62,7 +68,7 @@ class Constructor {
   }
 
   resizeSelectedMesh(width, height, depth) {
-    this.selectedCube.scaling = new BABYLON.Vector3(width, height, depth);
+    this.selectedMesh.scaling = new BABYLON.Vector3(width, height, depth);
   }
 };
 

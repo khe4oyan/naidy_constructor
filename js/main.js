@@ -11,7 +11,7 @@ const modal = new Modal(constructor);
 // controll buttons
 const scaleButtonDOM = document.querySelector('.controll_scale');
 scaleButtonDOM.addEventListener("click", () => {
-  if (constructor.selectedCube) {
+  if (constructor.selectedMesh) {
     modal.show();
   } else {
     alert("Select any cube before change it scale");

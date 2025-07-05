@@ -4,7 +4,7 @@ class Modal {
   modalDOM = null;
   doneButtonDOM = null;
   cancelButtonDOM = null;
-  
+
   inputWidthDOM = null;
   inputHeightDOM = null;
   inputDepthDOM = null;
@@ -15,7 +15,7 @@ class Modal {
     this.modalDOM = document.querySelector('.modal_scaleCube');
     this.doneButtonDOM = document.querySelector('.modal_scaleCube .done');
     this.cancelButtonDOM = document.querySelector('.modal_scaleCube .cancel');
-    
+
     this.inputWidthDOM = document.querySelector('.modal_scaleCube .width');
     this.inputHeightDOM = document.querySelector('.modal_scaleCube .height');
     this.inputDepthDOM = document.querySelector('.modal_scaleCube .depth');
@@ -34,17 +34,17 @@ class Modal {
       if (width === "") {
         return alert("Invalid input: width");
       }
+
       if (height === "") {
         return alert("Invalid input: height");
       }
+      
       if (depth === "") {
         return alert("Invalid input: depth");
       }
 
       this.constructorRef.resizeSelectedMesh(width, height, depth);
-      this.inputWidthDOM.value = "";
-      this.inputHeightDOM.value = "";
-      this.inputDepthDOM.value = "";
+      this.#resetInputsValues();
       this.hide();
     })
   }
@@ -53,6 +53,12 @@ class Modal {
     this.cancelButtonDOM.addEventListener("click", () => {
       this.hide();
     });
+  }
+
+  #resetInputsValues() {
+    this.inputWidthDOM.value = "";
+    this.inputHeightDOM.value = "";
+    this.inputDepthDOM.value = "";
   }
 
   // public methods
