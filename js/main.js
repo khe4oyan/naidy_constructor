@@ -1,7 +1,7 @@
 import Constructor from "../classes/constructor.js";
 import Modal from "../classes/modal.js";
 
-// constructors
+// constructor
 const constructor = new Constructor(100, 100);
 constructor.newCube(0, 0, 0);
 

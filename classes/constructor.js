@@ -28,7 +28,6 @@ class Constructor {
     this.scene.onPointerObservable.add((pointerInfo) => {
       if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERTAP) {
         const meshData = pointerInfo?._pickInfo?.pickedMesh;
-
         this.gizmoManager.positionGizmoEnabled = false;
 
         if (meshData?.name !== "ground") {
@@ -61,10 +60,6 @@ class Constructor {
 
   stateUpdate(newState) {
     this.state = newState;
-  }
-
-  toggleMoveGizmo() {
-    this.gizmoManager.positionGizmoEnabled = !this.gizmoManager.positionGizmoEnabled;
   }
 
   resizeSelectedMesh(width, height, depth) {
