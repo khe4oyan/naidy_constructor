@@ -78,7 +78,7 @@ class Constructor {
 
   newCube(x, y, z, size = null, color = null) {
     const cube = new Cube(x, y, z, this);
-    this.selectedMesh = cube;
+    this.selectedMesh = cube.mesh;
 
     if (size) {
       cube.setSize(...size);
@@ -90,6 +90,8 @@ class Constructor {
 
     this.cubes.push(cube);
     this.gizmoManager.attachableMeshes = this.cubes;
+
+    this.gizmoOn();
 
     return cube;
   }
