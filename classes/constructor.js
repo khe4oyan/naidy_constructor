@@ -34,12 +34,11 @@ class Constructor {
     this.scene.onPointerObservable.add((pointerInfo) => {
       if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERTAP) {
         const meshData = pointerInfo?._pickInfo?.pickedMesh;
-        this.gizmoManager.positionGizmoEnabled = false;
+        this.gizmoOff();
 
         if (meshData?.name !== "ground" && this.#isMovableMesh(meshData)) {
           this.newSelectedMesh(meshData);
-          this.gizmoManager.attachToMesh(this.selectedMesh);
-          this.gizmoManager.positionGizmoEnabled = true;
+          this.gizmoOn();
         } else {
           this.newSelectedMesh(null);
         }
@@ -79,6 +78,7 @@ class Constructor {
 
   newCube(x, y, z, size = null, color = null) {
     const cube = new Cube(x, y, z, this);
+    this.selectedMesh = cube;
 
     if (size) {
       cube.setSize(...size);
@@ -91,7 +91,15 @@ class Constructor {
     this.cubes.push(cube);
     this.gizmoManager.attachableMeshes = this.cubes;
 
-    return cube.cubeName;
+    return cube;
+  }
+
+  gizmoOn() {
+    this.gizmoManager.attachToMesh(this.selectedMesh);
+    this.gizmoManager.positionGizmoEnabled = true;
+  }
+  gizmoOff() {
+    this.gizmoManager.positionGizmoEnabled = false;
   }
 
   resizeSelectedMesh(width, height, depth) {
