@@ -28,3 +28,9 @@ scaleButtonDOM.addEventListener("click", () => {
     Notifications.err("Select any cube before change it scale");
   }
 });
+
+const newCubeButton = document.querySelector(".controll_add_section");
+newCubeButton.addEventListener("click", () => {
+  const {x, y, z} = constructor.mouseLastClick;
+  constructor.newCube(constructor.fixPos(x), constructor.fixPos(y), constructor.fixPos(z), null, [1, 0, 0]);
+});

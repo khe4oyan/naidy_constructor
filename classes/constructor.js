@@ -22,6 +22,7 @@ class Constructor {
     this.light = light;
     this.ground = ground;
     this.cubes = [];
+    this.mouseLastClick = {x: 0, y: 0, z: 0};
 
     this.gizmoManager = new BABYLON.GizmoManager(scene);
     this.gizmoManager.positionGizmoEnabled = true;
@@ -124,9 +125,9 @@ class Constructor {
   }
 
   resizeSelectedMesh(width, height, depth) {
-    this.selectedMesh.position._x = this.#fixPos(this.selectedMesh.position._x, width);
-    this.selectedMesh.position._y = this.#fixPos(this.selectedMesh.position._y, height);
-    this.selectedMesh.position._z = this.#fixPos(this.selectedMesh.position._z, depth);
+    this.selectedMesh.position._x = this.fixPos(this.selectedMesh.position._x, width);
+    this.selectedMesh.position._y = this.fixPos(this.selectedMesh.position._y, height);
+    this.selectedMesh.position._z = this.fixPos(this.selectedMesh.position._z, depth);
 
     this.selectedMesh.scaling = new BABYLON.Vector3(width, height, depth);
   }
