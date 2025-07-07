@@ -11,6 +11,7 @@ class Constructor {
   cubes = null;
   selectedMesh = null;
   gizmoManager = null;
+  mouseLastClick = null;
 
   constructor(groundSize) {
     const [canvasDOM, engine, scene, camera, light, ground] = new ConstructorInitializer(groundSize);
@@ -32,18 +33,34 @@ class Constructor {
 
   #cubeClickInit() {
     this.scene.onPointerObservable.add((pointerInfo) => {
-      if (pointerInfo.type === BABYLON.PointerEventTypes.POINTERTAP) {
-        const meshData = pointerInfo?._pickInfo?.pickedMesh;
-        this.gizmoOff();
+      switch (pointerInfo.type) {
+        case BABYLON.PointerEventTypes.POINTERTAP: {
+          const meshData = pointerInfo?._pickInfo?.pickedMesh;
+          this.gizmoOff();
 
-        if (meshData?.name !== "ground" && this.#isMovableMesh(meshData)) {
-          this.newSelectedMesh(meshData);
-          this.gizmoOn();
-        } else {
-          this.newSelectedMesh(null);
+          if (meshData?.name !== "ground" && this.#isMovableMesh(meshData)) {
+            this.newSelectedMesh(meshData);
+            this.gizmoOn();
+          } else {
+            this.newSelectedMesh(null);
+          }
+          
+          break;
+        }
+
+        case BABYLON.PointerEventTypes.POINTERDOWN: {
+          const scene = this.scene;
+          const pickResult = scene.pick(scene.pointerX, scene.pointerY);
+
+          if (pickResult.hit && pickResult.pickedPoint) {
+            this.mouseLastClick = pickResult.pickedPoint;
+          }
+
+          break;
         }
       }
     });
+
   }
 
   #isMovableMesh(meshData) {
@@ -67,6 +84,8 @@ class Constructor {
       new Cube(i + .5, _y, 0, this).setSize(.02, .02, groundSize).setColor(.7, .7, .7);
     }
   }
+
+  #fixPos = (number, side) => (Math.floor(number) + (((side % 2) === 0) ? .5 : 0));
 
   newSelectedMesh(mesh) {
     this.selectedMesh = mesh;
@@ -105,11 +124,9 @@ class Constructor {
   }
 
   resizeSelectedMesh(width, height, depth) {
-    const calcPos = (number, side) => (Math.floor(number) + (((side % 2) === 0) ? .5 : 0));
-
-    this.selectedMesh.position._x = calcPos(this.selectedMesh.position._x, width);
-    this.selectedMesh.position._y = calcPos(this.selectedMesh.position._y, height);
-    this.selectedMesh.position._z = calcPos(this.selectedMesh.position._z, depth);
+    this.selectedMesh.position._x = this.#fixPos(this.selectedMesh.position._x, width);
+    this.selectedMesh.position._y = this.#fixPos(this.selectedMesh.position._y, height);
+    this.selectedMesh.position._z = this.#fixPos(this.selectedMesh.position._z, depth);
 
     this.selectedMesh.scaling = new BABYLON.Vector3(width, height, depth);
   }
