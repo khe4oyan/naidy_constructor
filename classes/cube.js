@@ -8,12 +8,10 @@ class Cube {
   constructor(x, y, z, constructorRef) {
     this.constructorRef = constructorRef;
     this.cubeName = `cube_${Cube.cubeIndex++}`;
-    const box = BABYLON.MeshBuilder.CreateBox(this.cubeName, { size: 1 }, this.scene);
-    box.position.x = x;
-    box.position.y = y;
-    box.position.z = z;
-
-    this.mesh = box;
+    this.mesh = BABYLON.MeshBuilder.CreateBox(this.cubeName, { size: 1 }, this.scene);
+    this.mesh.position.x = x;
+    this.mesh.position.y = y;
+    this.mesh.position.z = z;
   }
 
   setSize(width, height, depth) {

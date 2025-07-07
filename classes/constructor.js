@@ -89,17 +89,18 @@ class Constructor {
     }
 
     this.cubes.push(cube);
-
     this.gizmoManager.attachableMeshes = this.cubes;
 
     return cube.cubeName;
   }
 
-  stateUpdate(newState) {
-    this.state = newState;
-  }
-
   resizeSelectedMesh(width, height, depth) {
+    const calcPos = (number, side) => (Math.floor(number) + (((side % 2) === 0) ? .5 : 0));
+
+    this.selectedMesh.position._x = calcPos(this.selectedMesh.position._x, width);
+    this.selectedMesh.position._y = calcPos(this.selectedMesh.position._y, height);
+    this.selectedMesh.position._z = calcPos(this.selectedMesh.position._z, depth);
+
     this.selectedMesh.scaling = new BABYLON.Vector3(width, height, depth);
   }
 };
