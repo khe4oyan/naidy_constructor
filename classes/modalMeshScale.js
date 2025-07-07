@@ -1,3 +1,5 @@
+import Notifications from "./notifications.js";
+
 class ModalMeshScale {
   constructorRef = null;
 
@@ -32,26 +34,28 @@ class ModalMeshScale {
       const depth = this.inputDepthDOM.value.trim();
 
       if (width === "") {
-        return alert("Invalid input: width");
+        return Notifications.err("Invalid input: width");
       }
 
       if (height === "") {
-        return alert("Invalid input: height");
+        return Notifications.err("Invalid input: height");
       }
       
       if (depth === "") {
-        return alert("Invalid input: depth");
+        return Notifications.err("Invalid input: depth");
       }
 
       this.constructorRef.resizeSelectedMesh(width, height, depth);
       this.#resetInputsValues();
       this.hide();
+      Notifications.succ();
     })
   }
 
   #cancelButtonHandlerInit() {
     this.cancelButtonDOM.addEventListener("click", () => {
       this.hide();
+      Notifications.info("Canceled");
     });
   }
 

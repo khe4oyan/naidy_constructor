@@ -1,15 +1,12 @@
+import Notifications from './notifications.js'
+
 class Cube {
   static cubeIndex = 0;
 
   constructorRef = null;
   mesh = null; // babylon object
   cubeName = null;
-  size = {
-    width: null,
-    height: null,
-    depth: null,
-  };
-  
+
   static applyTextureWithFixedPixelSize(mesh, textureURL, pixelSize) {
     const scene = mesh.getScene();
 
@@ -25,10 +22,11 @@ class Cube {
     // Babylon.js не даёт напрямую, но можно получить через texture.getSize()
     texture.onLoadObservable.add(() => {
       const texSize = texture.getSize();
+      
       if (!texSize) {
-        console.warn("Не удалось получить размер текстуры.");
-        return;
+        return Notifications.warn("Failed to get texture size.");
       }
+
       const texWidthPx = texSize.width;
       const texHeightPx = texSize.height;
 

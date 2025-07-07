@@ -38,7 +38,7 @@ class ConstructorInitializer {
     // Плоскость (земля)
     const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: groundW, height: groundH }, this.scene);
     ground.position.y = -0.5
-    Cube.applyTextureWithFixedPixelSize(ground, "../assets/textures/blueprint.png", 10000);
+    Cube.applyTextureWithFixedPixelSize(ground, "../assets/textures/blueprint.png", 1000);
   }
 
   #run() {

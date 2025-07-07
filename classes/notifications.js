@@ -12,14 +12,10 @@ class Notifications {
     }, 3000);
   }
 
-  static info (text) { this.#createNotificationDOM(text, "notification_info"); }
+  static info(text) { this.#createNotificationDOM(text, "notification_info"); }
   static warn(text) { this.#createNotificationDOM(text, "notification_warn"); }
-  static err(text) { this.#createNotificationDOM(text, "notification_error"); }
-  static succ(text) { this.#createNotificationDOM(text, "notification_success"); }
+  static err(text = "Something went wrong!") { this.#createNotificationDOM(text, "notification_error"); }
+  static succ(text = "Done!") { this.#createNotificationDOM(text, "notification_success"); }
 }
 
-// <div class="notification notification_info">Info</div>
-// <div class="notification notification_warn">Warn</div>
-// <div class="notification notification_error">Error</div>
-// <div class="notification notification_success">Success</div>
 export default Notifications;

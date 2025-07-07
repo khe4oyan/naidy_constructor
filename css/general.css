@@ -131,8 +131,10 @@ button:disabled {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    width: 300px;
 
     .notification {
+      width: 100%;
       border: 2px solid #0008;
       border-radius: 5px;
       padding: 3px 7px;
