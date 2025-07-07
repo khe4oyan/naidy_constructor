@@ -9,7 +9,7 @@ class Notifications {
     this.notificationsDOM.appendChild(div);
     setTimeout(() => {
       div.remove();
-    }, 3000);
+    }, 4000);
   }
 
   static info(text) { this.#createNotificationDOM(text, "notification_info"); }

@@ -1,19 +1,18 @@
-import Cube from "./Cube.js";
-
 class ConstructorInitializer {
   canvasDOM = null;
   engine = null;
   scene = null;
   camera = null;
   light = null;
+  ground = null;
 
-  constructor(groundW, groundH) {
+  constructor(groundSize) {
     this.#initCanvas();
     this.#initEngine();
-    this.#initScene(groundW, groundH);
+    this.#initScene(groundSize);
     this.#run();
 
-    return [this.canvasDOM, this.engine, this.scene, this.camera, this.light];
+    return [this.canvasDOM, this.engine, this.scene, this.camera, this.light, this.ground];
   }
 
   #initCanvas() {
@@ -24,7 +23,7 @@ class ConstructorInitializer {
     this.engine = new BABYLON.Engine(this.canvasDOM, true);
   }
 
-  #initScene(groundW, groundH) {
+  #initScene(groundSize) {
     this.scene = new BABYLON.Scene(this.engine);
 
     // Камера
@@ -36,9 +35,12 @@ class ConstructorInitializer {
     this.light.intensity = 0.9;
 
     // Плоскость (земля)
-    const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: groundW, height: groundH }, this.scene);
-    ground.position.y = -0.5
-    Cube.applyTextureWithFixedPixelSize(ground, "../assets/textures/blueprint.png", 1000);
+    this.#showGround(groundSize);
+  }
+
+  #showGround(groundSize) {
+    this.ground = BABYLON.MeshBuilder.CreateGround("ground", { width: groundSize, height: groundSize }, this.scene);
+    this.ground.position.y = -0.5;
   }
 
   #run() {

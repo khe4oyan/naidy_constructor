@@ -65,6 +65,12 @@ class ModalMeshScale {
     this.inputDepthDOM.value = "";
   }
 
+  initInputValues({ _x, _y, _z}) {
+    this.inputWidthDOM.value = _x;
+    this.inputHeightDOM.value = _y;
+    this.inputDepthDOM.value = _z;
+  }
+
   // public methods
   hide() {
     if (!this.modalDOM.classList.contains("hide")) {
