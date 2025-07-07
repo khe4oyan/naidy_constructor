@@ -45,7 +45,7 @@ class Constructor {
           } else {
             this.newSelectedMesh(null);
           }
-          
+
           break;
         }
 
@@ -86,7 +86,7 @@ class Constructor {
     }
   }
 
-  #fixPos = (number, side) => (Math.floor(number) + (((side % 2) === 0) ? .5 : 0));
+  fixPos = (number, side) => (Math.round(number) + (((side % 2) === 0) ? .5 : 0));
 
   newSelectedMesh(mesh) {
     this.selectedMesh = mesh;
