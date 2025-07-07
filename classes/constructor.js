@@ -23,6 +23,9 @@ class Constructor {
     this.cubes = [];
 
     this.gizmoManager = new BABYLON.GizmoManager(scene);
+    this.gizmoManager.positionGizmoEnabled = true;
+    this.gizmoManager.gizmos.positionGizmo.snapDistance = 1;
+
     this.#cubeClickInit();
     this.#showGrid(groundSize);
   }
